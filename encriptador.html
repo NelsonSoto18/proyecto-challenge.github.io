@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Cifrado de texto</title>
+	<meta charset="UTF-8">
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			margin: 20px;
+      background-image: url(encripta/img/istockphoto-636133264-640x640.jpg);
+      background-repeat: no-repeat;
+      background-size: cover;
+		}
+
+		h1 {
+			text-align: center;
+		}
+		label {
+			font-weight: bold;
+		}
+		input[type="text"] {
+			padding: 10px;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			width: 80%;
+			margin-bottom: 10px;
+		}
+		button {
+			background-color: #4CAF50;
+			border: none;
+			color: white;
+			padding: 10px 20px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+			border-radius: 4px;
+			cursor: pointer;
+			margin-right: 10px;
+		}
+		button:hover {
+			background-color: #3e8e41;
+		}
+
+    footer {
+			text-align: right;
+			margin-top: 200px;
+			padding-right: 20px;
+		}
+    
+	</style>
+</head>
+<body>
+  <h1>Encriptador y Desencriptador de texto</h1>
+  <label for="texto">Texto:</label>
+  <input type="text" id="texto">
+  <br><br>
+  <button onclick="encriptar()">Encriptar</button>
+  <button onclick="desencriptar()">Desencriptar</button>
+  <button onclick="copiarResultado()">Copiar resultado</button>
+  <br><br>
+  <label for="resultado">Resultado:</label>
+  <input type="text" id="resultado">
+
+  <script>
+      var alfabeto = "abcdefghijklmnopqrstuvwxyz";
+
+      function mostrarAlertaError() {
+          alert("Error: Solo se permiten letras minúsculas.");
+      }
+
+      function mostrarAlertaCaracterEspecial() {
+          alert("Error: No se permiten caracteres especiales.");
+      }
+
+      function validarTexto() {
+          var texto = document.getElementById("texto").value;
+          var textoLowerCase = texto.toLowerCase();
+
+          if (texto !== textoLowerCase) {
+              mostrarAlertaError();
+              return false;
+          }
+
+          // Expresión regular para buscar caracteres especiales
+          var caracteresEspeciales = /[áéíóúñ.,(){}""#$%&/=!?¿]/;
+          if (caracteresEspeciales.test(texto)) {
+              mostrarAlertaCaracterEspecial();
+              return false;
+          }
+
+          return true;
+      }
+
+      function encriptar() {
+          if (!validarTexto()) {
+              return;
+          }
+
+          var texto = document.getElementById("texto").value.toLowerCase();
+          var resultado = "";
+
+          for (var i = 0; i < texto.length; i++) {
+              var charIndex = alfabeto.indexOf(texto.charAt(i));
+              if (charIndex != -1) {
+                  resultado += alfabeto.charAt((charIndex + 3) % 26);
+              } else {
+                  resultado += texto.charAt(i);
+              }
+          }
+
+          document.getElementById("resultado").value = resultado;
+      }
+
+      function desencriptar() {
+          if (!validarTexto()) {
+              return;
+          }
+
+          var texto = document.getElementById("resultado").value.toLowerCase();
+          var resultado = "";
+
+          for (var i = 0; i < texto.length; i++) {
+              var charIndex = alfabeto.indexOf(texto.charAt(i));
+              if (charIndex != -1) {
+                  resultado += alfabeto.charAt((charIndex + 23) % 26);
+              } else {
+                  resultado += texto.charAt(i);
+              }
+          }
+
+          document.getElementById("resultado").value = resultado;
+      }
+
+      function copiarResultado() {
+          var resultado = document.getElementById("resultado");
+          resultado.select();
+          document.execCommand("copy");
+      }
+  </script>
+</body>
+
+</html>
+
+
+
+
+
+	<footer>
+		<p><em><strong>Desarrollado por Nelson Soto</strong></em></p>
+		<p><em><strong>Contacto: nelbertosoto@gmail.com</strong></em></p>
+		<p><em><strong>Año de desarrollo: 2023</strong></em></p>
+	</footer>
+</body>
+</html>
+
